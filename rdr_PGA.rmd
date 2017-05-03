@@ -1,3 +1,5 @@
+
+```{r}
 library("dplyr")
 library("ggplot2")
 library("lattice")
@@ -6,22 +8,18 @@ setwd("/home/matthias/Dokumente/Matsche/Data_Science/RDR")
 
 activity_raw <- read.csv("activity.csv")
 
-# Transform the date attribute to an actual date format
 activity_raw$date <- as.POSIXct(activity_raw$date, format="%Y-%m-%d")
 
-# Compute the weekdays from the date attribute
 activity_raw <- data.frame(date=activity_raw$date, 
                            weekday=tolower(weekdays(activity_raw$date)), 
                            steps=activity_raw$steps, 
                            interval=activity_raw$interval)
 
-# Compute the day type (weekend or weekday)
 activity_raw <- cbind(activity_raw, 
                       daytype=ifelse(activity_raw$weekday == "saturday" | 
                                        activity_raw$weekday == "sunday", "weekend", 
                                      "weekday"))
-
-# Create the final data.frame
+                                     
 activity <- data.frame(date=activity_raw$date, 
                        weekday=activity_raw$weekday, 
                        daytype=activity_raw$daytype, 
@@ -29,15 +27,23 @@ activity <- data.frame(date=activity_raw$date,
                        steps=activity_raw$steps)
 head(activity)
 
-# Compute the total number of steps each day (NA values removed)
+```
+
+
+
+
+```{r}
 sum_data <- aggregate(activity$steps, by=list(activity$date), FUN=sum, na.rm=TRUE)
 
-# Rename the attributes
+
 names(sum_data) <- c("date", "total")
 
 head(sum_data)
 
-# Compute the histogram of the total number of steps each day
+```
+
+
+```{r}
 hist(sum_data$total, 
      breaks=seq(from=0, to=25000, by=2500),
      col="blue", 
@@ -45,24 +51,27 @@ hist(sum_data$total,
      ylim=c(0, 20), 
      main="Histogram of the total number of steps taken each day\n(NA removed)")
 
+```
+
+
+```{r}
 mean(sum_data$total)
 median(sum_data$total)
-
-# Clear the workspace
 rm(sum_data)
+```
 
-# Compute the means of steps accross all days for each interval
+```{r}
 mean_data <- aggregate(activity$steps, 
                        by=list(activity$interval), 
                        FUN=mean, 
                        na.rm=TRUE)
 
-# Rename the attributes
+
 names(mean_data) <- c("interval", "mean")
 
 head(mean_data)
-
-# Compute the time series plot
+```
+```{r}
 plot(mean_data$interval, 
      mean_data$mean, 
      type="l", 
@@ -72,45 +81,39 @@ plot(mean_data$interval,
      ylab="Average number of steps", 
      main="Time-series of the average number of steps per intervals\n(NA removed)")
 
-# We find the position of the maximum mean
+```
+
+```{r}
+
 max_pos <- which(mean_data$mean == max(mean_data$mean))
 
-# We lookup the value of interval at this position
+
 max_interval <- mean_data[max_pos, 1]
 
-# Clear the workspace
+
 rm(max_pos, mean_data)
 
-# Clear the workspace
+
 rm(max_interval)
 
-# We use the trick that a TRUE boolean value is equivalent to 1 and a FALSE to 0.
 NA_count <- sum(is.na(activity$steps))
 
-# Clear the workspace
 rm(NA_count)
 
-# Find the NA positions
 na_pos <- which(is.na(activity$steps))
 
-# Create a vector of means
 mean_vec <- rep(mean(activity$steps, na.rm=TRUE), times=length(na_pos))
 
-# Replace the NAs by the means
 activity[na_pos, "steps"] <- mean_vec
 
-# Clear the workspace
 rm(mean_vec, na_pos)
 
 head(activity)
-
-# Compute the total number of steps each day (NA values removed)
+```
+```{r}
 sum_data <- aggregate(activity$steps, by=list(activity$date), FUN=sum)
-
-# Rename the attributes
 names(sum_data) <- c("date", "total")
 
-# Compute the histogram of the total number of steps each day
 hist(sum_data$total, 
      breaks=seq(from=0, to=25000, by=2500),
      col="blue", 
@@ -118,35 +121,40 @@ hist(sum_data$total,
      ylim=c(0, 30), 
      main="Histogram of the total number of steps taken each day\n(NA replaced by mean value)")
 
+```
+
+```{r}
 mean(sum_data$total)
+```
+```{r}
 median(sum_data$total)
-
-# The new factor variable "daytype" was already in the activity data frame
+```
+```{r}
 head(activity)
-
-# Clear the workspace
+```
+```{r}
 rm(sum_data)
 
-# Load the lattice graphical library
-library(lattice)
 
-# Compute the average number of steps taken, averaged across all daytype variable
 mean_data <- aggregate(activity$steps, 
                        by=list(activity$daytype, 
                                activity$weekday, activity$interval), mean)
 
-# Rename the attributes
 names(mean_data) <- c("daytype", "weekday", "interval", "mean")
 
 head(mean_data)
+```
 
-# Compute the time serie plot
+```{r}
 xyplot(mean ~ interval | daytype, mean_data, 
        type="l", 
        lwd=1, 
        xlab="Interval", 
        ylab="Number of steps", 
        layout=c(1,2))
+```
+
+
 
 
 
