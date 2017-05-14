@@ -136,7 +136,7 @@ plot(mean_data$interval,
      main="Time-series of the average number of steps per intervals\n(NA removed)")
 ```
 
-![plot of chunk unnamed-chunk-19](figure/unnamed-chunk-19-1.png?raw=TRUE)
+![plot of chunk unnamed-chunk-19](https://github.com/matsche81/RDR/blob/master/unnamed-chunk-201-1.png)
 
 
 ```r
@@ -188,7 +188,7 @@ hist(sum_data$total,
      main="Histogram of the total number of steps taken each day\n(NA replaced by mean value)")
 ```
 
-![plot of chunk unnamed-chunk-21](figure/unnamed-chunk-21-1.png?raw=TRUE)
+![plot of chunk unnamed-chunk-21](https://github.com/matsche81/RDR/blob/master/unnamed-chunk-203-1.png)
 
 
 ```r
@@ -254,7 +254,7 @@ xyplot(mean ~ interval | daytype, mean_data,
        layout=c(1,2))
 ```
 
-![plot of chunk unnamed-chunk-26](figure/unnamed-chunk-26-1.png?raw=TRUE)
+![plot of chunk unnamed-chunk-26](https://github.com/matsche81/RDR/blob/master/unnamed-chunk-208-1.png)
 
 ```r
 knit("rdr_PGA3.rmd")
