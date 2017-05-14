@@ -1,6 +1,5 @@
 ---
-output:
-  github_document
+output: rmarkdown::github_document
 ---
 
 
@@ -79,7 +78,7 @@ hist(sum_data$total,
      main="Histogram of the total number of steps taken each day\n(NA removed)")
 ```
 
-![](rdr_PGA3_files/figure-markdown_github/unnamed-chunk-16-1.png)
+![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16-1.png?raw=TRUE)
 
 
 
@@ -137,7 +136,7 @@ plot(mean_data$interval,
      main="Time-series of the average number of steps per intervals\n(NA removed)")
 ```
 
-![](rdr_PGA3_files/figure-markdown_github/unnamed-chunk-19-1.png)
+![plot of chunk unnamed-chunk-19](figure/unnamed-chunk-19-1.png?raw=TRUE)
 
 
 ```r
@@ -189,7 +188,7 @@ hist(sum_data$total,
      main="Histogram of the total number of steps taken each day\n(NA replaced by mean value)")
 ```
 
-![](rdr_PGA3_files/figure-markdown_github/unnamed-chunk-21-1.png)
+![plot of chunk unnamed-chunk-21](figure/unnamed-chunk-21-1.png?raw=TRUE)
 
 
 ```r
@@ -244,6 +243,152 @@ head(mean_data)
 ## 5 weekday     montag        0 9.418355
 ## 6 weekday    samstag        0 4.672825
 ```
+
+
+```r
+xyplot(mean ~ interval | daytype, mean_data, 
+       type="l", 
+       lwd=1, 
+       xlab="Interval", 
+       ylab="Number of steps", 
+       layout=c(1,2))
+```
+
+![plot of chunk unnamed-chunk-26](figure/unnamed-chunk-26-1.png?raw=TRUE)
+
+```r
+knit("rdr_PGA3.rmd")
+```
+
+```
+## 
+## 
+## processing file: rdr_PGA3.rmd
+```
+
+```
+## 
+  |                                                                       
+  |                                                                 |   0%
+  |                                                                       
+  |...                                                              |   5%
+##   ordinary text without R code
+## 
+## 
+  |                                                                       
+  |......                                                           |   9%
+## label: unnamed-chunk-27
+## 
+  |                                                                       
+  |.........                                                        |  14%
+##   ordinary text without R code
+## 
+## 
+  |                                                                       
+  |............                                                     |  18%
+## label: unnamed-chunk-28
+## 
+  |                                                                       
+  |...............                                                  |  23%
+##   ordinary text without R code
+## 
+## 
+  |                                                                       
+  |..................                                               |  27%
+## label: unnamed-chunk-29
+```
+
+```
+## 
+  |                                                                       
+  |.....................                                            |  32%
+##   ordinary text without R code
+## 
+## 
+  |                                                                       
+  |........................                                         |  36%
+## label: unnamed-chunk-30
+## 
+  |                                                                       
+  |...........................                                      |  41%
+##   ordinary text without R code
+## 
+## 
+  |                                                                       
+  |..............................                                   |  45%
+## label: unnamed-chunk-31
+## 
+  |                                                                       
+  |................................                                 |  50%
+## label: unnamed-chunk-32
+```
+
+```
+## 
+  |                                                                       
+  |...................................                              |  55%
+##   ordinary text without R code
+## 
+## 
+  |                                                                       
+  |......................................                           |  59%
+## label: unnamed-chunk-33
+## 
+  |                                                                       
+  |.........................................                        |  64%
+## label: unnamed-chunk-34
+```
+
+```
+## 
+  |                                                                       
+  |............................................                     |  68%
+##   ordinary text without R code
+## 
+## 
+  |                                                                       
+  |...............................................                  |  73%
+## label: unnamed-chunk-35
+## 
+  |                                                                       
+  |..................................................               |  77%
+## label: unnamed-chunk-36
+## 
+  |                                                                       
+  |.....................................................            |  82%
+## label: unnamed-chunk-37
+## 
+  |                                                                       
+  |........................................................         |  86%
+## label: unnamed-chunk-38
+## 
+  |                                                                       
+  |...........................................................      |  91%
+##   ordinary text without R code
+## 
+## 
+  |                                                                       
+  |..............................................................   |  95%
+## label: unnamed-chunk-39
+```
+
+```
+## 
+  |                                                                       
+  |.................................................................| 100%
+##   ordinary text without R code
+```
+
+```
+## output file: rdr_PGA3.md
+```
+
+```
+## [1] "rdr_PGA3.md"
+```
+
+
+
 
 
 
