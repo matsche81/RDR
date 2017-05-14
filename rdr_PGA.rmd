@@ -1,10 +1,17 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
 
 ```{r}
+library("knitr")
 library("dplyr")
 library("ggplot2")
 library("lattice")
 
 setwd("/home/matthias/Dokumente/Matsche/Data_Science/RDR")
+
 
 activity_raw <- read.csv("activity.csv")
 
