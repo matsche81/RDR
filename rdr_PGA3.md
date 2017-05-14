@@ -1,7 +1,7 @@
 ---
 output: 
   md_document:
-    variant: github_document
+    variant: markdown_github
 ---
 
 
