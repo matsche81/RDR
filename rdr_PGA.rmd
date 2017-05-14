@@ -1,7 +1,8 @@
-
+---
+output: rmarkdown::github_document
+---
 
 ```{r}
-library("knitr")
 library("dplyr")
 library("ggplot2")
 library("lattice")
@@ -155,8 +156,6 @@ xyplot(mean ~ interval | daytype, mean_data,
        xlab="Interval", 
        ylab="Number of steps", 
        layout=c(1,2))
-
-knit("rdr_PGA.rmd")
 
 ```
 
