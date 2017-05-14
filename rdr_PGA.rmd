@@ -1,8 +1,4 @@
----
-output:
-  html_document: default
-  pdf_document: default
----
+
 
 ```{r}
 library("knitr")
@@ -159,6 +155,9 @@ xyplot(mean ~ interval | daytype, mean_data,
        xlab="Interval", 
        ylab="Number of steps", 
        layout=c(1,2))
+
+knit("rdr_PGA.rmd")
+
 ```
 
 
