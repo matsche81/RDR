@@ -1,0 +1,161 @@
+
+```{r}
+library("dplyr")
+library("ggplot2")
+library("lattice")
+
+setwd("/home/matthias/Dokumente/Matsche/Data_Science/RDR")
+
+activity_raw <- read.csv("activity.csv")
+
+activity_raw$date <- as.POSIXct(activity_raw$date, format="%Y-%m-%d")
+
+activity_raw <- data.frame(date=activity_raw$date, 
+                           weekday=tolower(weekdays(activity_raw$date)), 
+                           steps=activity_raw$steps, 
+                           interval=activity_raw$interval)
+
+activity_raw <- cbind(activity_raw, 
+                      daytype=ifelse(activity_raw$weekday == "saturday" | 
+                                       activity_raw$weekday == "sunday", "weekend", 
+                                     "weekday"))
+                                     
+activity <- data.frame(date=activity_raw$date, 
+                       weekday=activity_raw$weekday, 
+                       daytype=activity_raw$daytype, 
+                       interval=activity_raw$interval,
+                       steps=activity_raw$steps)
+head(activity)
+
+```
+
+
+
+
+```{r}
+sum_data <- aggregate(activity$steps, by=list(activity$date), FUN=sum, na.rm=TRUE)
+
+
+names(sum_data) <- c("date", "total")
+
+head(sum_data)
+
+```
+
+
+```{r}
+hist(sum_data$total, 
+     breaks=seq(from=0, to=25000, by=2500),
+     col="blue", 
+     xlab="Total number of steps", 
+     ylim=c(0, 20), 
+     main="Histogram of the total number of steps taken each day\n(NA removed)")
+
+```
+
+
+```{r}
+mean(sum_data$total)
+median(sum_data$total)
+rm(sum_data)
+```
+
+```{r}
+mean_data <- aggregate(activity$steps, 
+                       by=list(activity$interval), 
+                       FUN=mean, 
+                       na.rm=TRUE)
+
+
+names(mean_data) <- c("interval", "mean")
+
+head(mean_data)
+```
+```{r}
+plot(mean_data$interval, 
+     mean_data$mean, 
+     type="l", 
+     col="blue", 
+     lwd=2, 
+     xlab="Interval [minutes]", 
+     ylab="Average number of steps", 
+     main="Time-series of the average number of steps per intervals\n(NA removed)")
+
+```
+
+```{r}
+
+max_pos <- which(mean_data$mean == max(mean_data$mean))
+
+
+max_interval <- mean_data[max_pos, 1]
+
+
+rm(max_pos, mean_data)
+
+
+rm(max_interval)
+
+NA_count <- sum(is.na(activity$steps))
+
+rm(NA_count)
+
+na_pos <- which(is.na(activity$steps))
+
+mean_vec <- rep(mean(activity$steps, na.rm=TRUE), times=length(na_pos))
+
+activity[na_pos, "steps"] <- mean_vec
+
+rm(mean_vec, na_pos)
+
+head(activity)
+```
+```{r}
+sum_data <- aggregate(activity$steps, by=list(activity$date), FUN=sum)
+names(sum_data) <- c("date", "total")
+
+hist(sum_data$total, 
+     breaks=seq(from=0, to=25000, by=2500),
+     col="blue", 
+     xlab="Total number of steps", 
+     ylim=c(0, 30), 
+     main="Histogram of the total number of steps taken each day\n(NA replaced by mean value)")
+
+```
+
+```{r}
+mean(sum_data$total)
+```
+```{r}
+median(sum_data$total)
+```
+```{r}
+head(activity)
+```
+```{r}
+rm(sum_data)
+
+
+mean_data <- aggregate(activity$steps, 
+                       by=list(activity$daytype, 
+                               activity$weekday, activity$interval), mean)
+
+names(mean_data) <- c("daytype", "weekday", "interval", "mean")
+
+head(mean_data)
+```
+
+```{r}
+xyplot(mean ~ interval | daytype, mean_data, 
+       type="l", 
+       lwd=1, 
+       xlab="Interval", 
+       ylab="Number of steps", 
+       layout=c(1,2))
+```
+
+
+
+
+
+
