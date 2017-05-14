@@ -78,7 +78,7 @@ hist(sum_data$total,
      main="Histogram of the total number of steps taken each day\n(NA removed)")
 ```
 
-![plot of chunk unnamed-chunk-16](https://github.com/matsche81/RDR/blob/master/unnamed-chunk-13-1.png)
+![plot of chunk unnamed-chunk-16](https://github.com/matsche81/RDR/blob/master/unnamed-chunk-198-1.png)
 
 
 
